@@ -26,10 +26,8 @@ package schema
 
 import (
 	"bytes"
-	// In this context md5 is just used for versioning the current schema. It is a weak cryptographic primitive and
-	// should not be used for anything more important (password hashes etc.). Marking it as #nosec because of how it's
-	// being used.
-	"crypto/md5" // #nosec
+	"crypto/sha256"
+
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -67,7 +65,7 @@ type (
 		SchemaUpdateCqlFiles []string
 		// If set, the manifest is intentionally opting out of schema updates.
 		AllowNoCqlFiles bool
-		md5             string
+		hash            string
 	}
 
 	// changeSet represents all the changes
@@ -182,7 +180,7 @@ func (task *UpdateTask) updateSchemaVersion(oldVer string, cs *changeSet) error 
 	if err != nil {
 		return fmt.Errorf("failed to update schema_version table, err=%v", err.Error())
 	}
-	err = task.db.WriteSchemaUpdateLog(oldVer, cs.manifest.CurrVersion, cs.manifest.md5, cs.manifest.Description)
+	err = task.db.WriteSchemaUpdateLog(oldVer, cs.manifest.CurrVersion, cs.manifest.hash, cs.manifest.Description)
 	if err != nil {
 		return fmt.Errorf("failed to add entry to schema_update_history, err=%v", err.Error())
 	}
@@ -322,10 +320,10 @@ func readManifest(fsys fs.FS, dirPath string) (*manifest, error) {
 		return nil, fmt.Errorf("manifest missing SchemaUpdateCqlFiles")
 	}
 
-	// See comment above. This is an appropriate usage of md5.
+	// See comment above. This is an appropriate usage of hash.
 	// #nosec
-	md5Bytes := md5.Sum(jsonBlob)
-	manifest.md5 = hex.EncodeToString(md5Bytes[:])
+	hashBytes := sha256.Sum256(jsonBlob)
+	manifest.hash = hex.EncodeToString(hashBytes[:])
 
 	return &manifest, nil
 }

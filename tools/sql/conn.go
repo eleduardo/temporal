@@ -75,8 +75,8 @@ func (c *Connection) UpdateSchemaVersion(newVersion string, minCompatibleVersion
 }
 
 // WriteSchemaUpdateLog adds an entry to the schema update history table
-func (c *Connection) WriteSchemaUpdateLog(oldVersion string, newVersion string, manifestMD5 string, desc string) error {
-	return c.adminDb.WriteSchemaUpdateLog(oldVersion, newVersion, manifestMD5, desc)
+func (c *Connection) WriteSchemaUpdateLog(oldVersion string, newVersion string, manifestHash string, desc string) error {
+	return c.adminDb.WriteSchemaUpdateLog(oldVersion, newVersion, manifestHash, desc)
 }
 
 // Exec executes a sql statement

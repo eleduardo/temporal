@@ -26,7 +26,7 @@ package interceptor
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"fmt"
 
 	"go.temporal.io/server/common/api"
@@ -71,7 +71,7 @@ func (nli *NamespaceLogInterceptor) Intercept(
 			serverName = tlsInfo.State.ServerName
 			cert := authorization.PeerCert(tlsInfo)
 			if cert != nil {
-				certThumbprint = fmt.Sprintf("%x", md5.Sum(cert.Raw))
+				certThumbprint = fmt.Sprintf("%x", sha256.Sum256(cert.Raw))
 			}
 		}
 		nli.logger.Debug(

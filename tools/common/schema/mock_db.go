@@ -59,7 +59,7 @@ func (db *mockSQLDB) UpdateSchemaVersion(newVersion string, minCompatibleVersion
 }
 
 // WriteSchemaUpdateLog adds an entry to the schema update history table
-func (db *mockSQLDB) WriteSchemaUpdateLog(oldVersion string, newVersion string, manifestMD5 string, desc string) error {
+func (db *mockSQLDB) WriteSchemaUpdateLog(oldVersion string, newVersion string, manifestHash string, desc string) error {
 	return fmt.Errorf("unimplemented")
 }
 

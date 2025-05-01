@@ -101,7 +101,7 @@ type (
 		CreateSchemaVersionTables() error
 		ReadSchemaVersion(database string) (string, error)
 		UpdateSchemaVersion(database string, newVersion string, minCompatibleVersion string) error
-		WriteSchemaUpdateLog(oldVersion string, newVersion string, manifestMD5 string, desc string) error
+		WriteSchemaUpdateLog(oldVersion string, newVersion string, manifestHash string, desc string) error
 		ListTables(database string) ([]string, error)
 		DropTable(table string) error
 		DropAllTables(database string) error

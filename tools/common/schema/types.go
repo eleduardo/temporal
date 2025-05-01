@@ -68,7 +68,7 @@ type (
 		// UpdateSchemaVersion updates the schema version for the keyspace
 		UpdateSchemaVersion(newVersion string, minCompatibleVersion string) error
 		// WriteSchemaUpdateLog adds an entry to the schema update history table
-		WriteSchemaUpdateLog(oldVersion string, newVersion string, manifestMD5 string, desc string) error
+		WriteSchemaUpdateLog(oldVersion string, newVersion string, manifestHash string, desc string) error
 		// Close gracefully closes the client object
 		Close()
 		// Type gives the type of db (e.g. "cassandra", "sql")

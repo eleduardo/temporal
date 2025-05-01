@@ -106,9 +106,9 @@ func (pdb *db) UpdateSchemaVersion(database string, newVersion string, minCompat
 }
 
 // WriteSchemaUpdateLog adds an entry to the schema update history table
-func (pdb *db) WriteSchemaUpdateLog(oldVersion string, newVersion string, manifestMD5 string, desc string) error {
+func (pdb *db) WriteSchemaUpdateLog(oldVersion string, newVersion string, manifestHash string, desc string) error {
 	now := time.Now().UTC()
-	err := pdb.Exec(writeSchemaUpdateHistoryQuery, now.Year(), int(now.Month()), now, oldVersion, newVersion, manifestMD5, desc)
+	err := pdb.Exec(writeSchemaUpdateHistoryQuery, now.Year(), int(now.Month()), now, oldVersion, newVersion, manifestHash, desc)
 	return pdb.handle.ConvertError(err)
 }
 

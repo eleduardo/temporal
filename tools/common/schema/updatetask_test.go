@@ -241,6 +241,6 @@ func (s *UpdateTaskTestSuite) runReadManifestTest(
 	s.Equal(currVer, m.CurrVersion)
 	s.Equal(minVer, m.MinCompatibleVersion)
 	s.Equal(desc, m.Description)
-	s.True(len(m.md5) > 0)
+	s.True(len(m.hash) > 0)
 	s.Equal(files, m.SchemaUpdateCqlFiles)
 }
